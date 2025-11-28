@@ -124,6 +124,22 @@ body {
   transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
+/* Otimizações para dispositivos móveis */
+@media (hover: none) and (pointer: coarse) {
+  /* Reduzir animações em dispositivos touch */
+  * {
+    transition-duration: 0.15s !important;
+    animation-duration: 0.2s !important;
+  }
+  
+  /* Usar transform3d para aceleração de hardware */
+  .weather-card-mobile {
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+}
+
 /* Animações especificas para WeatherCard */
 .weather-expanded {
   animation: weather-expand 0.4s ease-out forwards;

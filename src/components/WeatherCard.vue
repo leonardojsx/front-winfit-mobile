@@ -1,6 +1,6 @@
 <template>
   <div 
-    class="relative bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-700 text-white shadow-xl rounded-2xl cursor-pointer transition-all duration-700 ease-in-out overflow-hidden"
+    class="relative bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-700 text-white shadow-xl rounded-2xl cursor-pointer transition-all duration-300 ease-out overflow-hidden weather-card-mobile"
     :class="[
       expanded ? 'max-h-[450px]' : 'max-h-[88px]',
       { 'transform hover:scale-[1.02]': !expanded }
@@ -48,21 +48,21 @@
 
         <!-- Conteúdo Expandido -->
         <div 
-          class="transition-all duration-500 ease-in-out"
+          class="transition-all duration-250 ease-out"
           :class="{ 
             'max-h-0 opacity-0 overflow-hidden': !expanded,
             'max-h-[360px] opacity-100': expanded
           }"
-          :style="{ transitionDelay: expanded ? '120ms' : '0ms' }"
+          :style="{ transitionDelay: expanded ? '50ms' : '0ms' }"
         >
           <!-- Temperatura Principal -->
           <div 
-            class="mb-6 pt-4 transition-all duration-400 ease-out transform"
+            class="mb-6 pt-4 transition-all duration-200 ease-out transform"
             :class="{ 
               'opacity-100 translate-y-0': expanded, 
               'opacity-0 translate-y-3': !expanded 
             }"
-            :style="{ transitionDelay: expanded ? '200ms' : '0ms' }"
+            :style="{ transitionDelay: expanded ? '100ms' : '0ms' }"
           >
             <div class="flex items-baseline gap-3">
               <span class="text-6xl font-light tracking-tight">21°</span>
@@ -83,12 +83,12 @@
 
           <!-- Informações Adicionais -->
           <div 
-            class="grid grid-cols-3 gap-6 pt-6 border-t border-white/20 transition-all duration-500 ease-out transform"
+            class="grid grid-cols-3 gap-6 pt-6 border-t border-white/20 transition-all duration-250 ease-out transform"
             :class="{ 
               'opacity-100 translate-y-0': expanded, 
               'opacity-0 translate-y-3': !expanded 
             }"
-            :style="{ transitionDelay: expanded ? '300ms' : '0ms' }"
+            :style="{ transitionDelay: expanded ? '150ms' : '0ms' }"
           >
             <div class="text-center group">
               <Thermometer class="w-5 h-5 text-white/70 mx-auto mb-2 group-hover:text-white transition-colors duration-200" />
