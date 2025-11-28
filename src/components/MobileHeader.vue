@@ -1,5 +1,5 @@
 <template>
-  <header class="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-50">
+  <header class="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-b border-gray-200 z-40 shadow-sm">
     <div class="flex items-center justify-between px-4 h-16">
       <div class="flex items-center gap-3">
         <button 
@@ -13,63 +13,78 @@
         <button 
           v-else
           @click="toggleMenu"
-          class="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+          class="p-2 hover:bg-gray-100 rounded-lg transition-colors relative z-50"
         >
           <Menu class="w-6 h-6 text-gray-700" />
         </button>
 
         <div>
-          <h1 class="text-emerald-700 font-semibold">WINFIT</h1>
-          <p class="text-xs text-gray-600">AgroRevenda</p>
+          <h1 class="text-emerald-700 font-bold text-lg">WINFIT</h1>
+          <p class="text-xs text-gray-500 font-medium">AgroRevenda</p>
         </div>
       </div>
 
-      <button class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm flex items-center gap-1">
+      <button class="bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white px-5 py-2.5 rounded-xl text-sm font-medium flex items-center gap-2 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105">
         <ShoppingCart class="w-4 h-4" />
         PDV
       </button>
     </div>
+  </header>
 
-    <!-- Side Menu -->
+  <!-- Side Menu Overlay -->
+  <Transition name="fade">
     <div 
       v-if="isMenuOpen" 
-      class="fixed inset-0 z-40"
+      class="fixed inset-0 bg-black bg-opacity-50 z-50"
       @click="closeMenu"
+    />
+  </Transition>
+  
+  <!-- Side Menu -->
+  <Transition name="slide">
+    <div 
+      v-if="isMenuOpen"
+      class="fixed left-0 top-0 bottom-0 w-80 bg-white shadow-2xl z-50"
     >
-      <div class="absolute inset-0 bg-black bg-opacity-50" />
-      <div 
-        class="absolute left-0 top-0 bottom-0 w-80 bg-white shadow-lg"
-        @click.stop
-      >
-        <SideMenu @close="closeMenu" />
-      </div>
+      <SideMenu @close="closeMenu" />
     </div>
-  </header>
+  </Transition>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { useAppStore } from '@/stores/app'
 import { Menu, ArrowLeft, ShoppingCart } from 'lucide-vue-next'
 import SideMenu from './SideMenu.vue'
 
 const router = useRouter()
 const route = useRoute()
-const store = useAppStore()
 
-const isMenuOpen = computed(() => store.isMenuOpen)
+// Estado local do menu
+const isMenuOpen = ref(false)
 
 const showBackButton = computed(() => {
   return route.name !== 'dashboard'
 })
 
+// Watch para controlar o scroll do body
+watch(isMenuOpen, (newValue) => {
+  if (newValue) {
+    document.body.style.overflow = 'hidden'
+  } else {
+    document.body.style.overflow = ''
+  }
+})
+
 const toggleMenu = () => {
-  store.setMenuOpen(!store.isMenuOpen)
+  console.log('Toggle clicked, current state:', isMenuOpen.value)
+  isMenuOpen.value = !isMenuOpen.value
+  console.log('New state:', isMenuOpen.value)
 }
 
 const closeMenu = () => {
-  store.setMenuOpen(false)
+  console.log('Closing menu')
+  isMenuOpen.value = false
 }
 
 const goBack = () => {

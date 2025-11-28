@@ -1,26 +1,48 @@
 <template>
-  <div class="bg-white shadow-sm rounded-lg">
-    <div class="p-5">
-      <div class="flex items-center gap-2 mb-4">
-        <Clock class="w-5 h-5 text-emerald-700" />
-        <h3 class="text-gray-900">Últimas Atualizações</h3>
+  <div class="bg-white shadow-sm hover:shadow-lg rounded-2xl border border-gray-100 hover:border-gray-200 transition-all duration-300">
+    <div class="p-6">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 text-white p-2.5 rounded-xl">
+          <Clock class="w-5 h-5" />
+        </div>
+        <div>
+          <h3 class="text-gray-900 font-semibold">Últimas Atualizações</h3>
+          <p class="text-gray-500 text-sm">Atividade recente do sistema</p>
+        </div>
       </div>
 
-      <div class="h-80 overflow-y-auto -mx-5">
-        <div class="px-5 space-y-3">
+      <div class="h-80 overflow-y-auto -mx-6">
+        <div class="px-6 space-y-3">
           <div
-            v-for="update in updates"
+            v-for="(update, index) in updates"
             :key="update.id"
-            class="p-3 bg-gray-50 rounded-lg border border-gray-100 hover:border-emerald-200 transition-colors"
+            class="relative p-4 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-100 hover:border-emerald-200 hover:shadow-sm transition-all duration-200 cursor-pointer group"
           >
-            <div class="flex items-start justify-between mb-2">
-              <p class="text-gray-900 text-sm">{{ update.title }}</p>
-              <span class="text-xs text-gray-500 whitespace-nowrap ml-2">
-                {{ update.time }}
-              </span>
+            <!-- Indicador de status -->
+            <div :class="getStatusColor(index)" class="absolute left-0 top-4 w-1 h-12 rounded-full"></div>
+            
+            <div class="ml-4">
+              <div class="flex items-start justify-between mb-2">
+                <p class="text-gray-900 text-sm font-medium group-hover:text-emerald-700 transition-colors">
+                  {{ update.title }}
+                </p>
+                <div class="flex flex-col items-end">
+                  <span class="text-xs text-gray-500 font-medium bg-gray-100 px-2 py-1 rounded-full">
+                    {{ update.time }}
+                  </span>
+                </div>
+              </div>
+              <p class="text-gray-600 text-sm mb-2 leading-relaxed">{{ update.description }}</p>
+              <div class="flex items-center justify-between">
+                <p class="text-gray-400 text-xs flex items-center gap-1">
+                  <Calendar class="w-3 h-3" />
+                  {{ update.date }}
+                </p>
+                <div v-if="index < 2" class="bg-emerald-100 text-emerald-700 text-xs px-2 py-1 rounded-full font-medium">
+                  Novo
+                </div>
+              </div>
             </div>
-            <p class="text-gray-600 text-sm mb-1">{{ update.description }}</p>
-            <p class="text-gray-400 text-xs">{{ update.date }}</p>
           </div>
         </div>
       </div>
@@ -29,7 +51,7 @@
 </template>
 
 <script setup lang="ts">
-import { Clock } from 'lucide-vue-next'
+import { Clock, Calendar } from 'lucide-vue-next'
 
 const updates = [
   {
@@ -68,4 +90,15 @@ const updates = [
     description: 'Sítio Boa Esperança - Viçosa/MG',
   },
 ]
+
+const getStatusColor = (index: number) => {
+  const colors = [
+    'bg-emerald-500',
+    'bg-blue-500', 
+    'bg-orange-500',
+    'bg-green-500',
+    'bg-purple-500'
+  ]
+  return colors[index % colors.length]
+}
 </script>

@@ -1,30 +1,42 @@
 <template>
-  <div class="bg-white shadow-sm hover:shadow-md transition-shadow rounded-lg">
-    <div class="p-5">
+  <div :class="cardClasses" class="group cursor-pointer">
+    <div :class="compact ? 'p-5' : 'p-5'">
       <!-- Ícone e Título -->
       <div class="flex items-start gap-3 mb-4">
-        <div :class="colorClasses">
-          <component :is="icon" class="w-6 h-6" />
+        <div :class="iconClasses">
+          <component :is="icon" :class="compact ? 'w-4 h-4' : 'w-6 h-6'" />
         </div>
-        <div class="flex-1">
-          <h3 class="text-gray-900">{{ title }}</h3>
-          <p v-if="period" class="text-gray-500 text-sm">{{ period }}</p>
+        <div class="flex-1 min-w-0">
+          <h3 :class="compact ? 'text-sm font-medium leading-tight' : 'text-base font-medium'" class="text-gray-900">{{ title }}</h3>
+          <p v-if="period" :class="compact ? 'text-xs' : 'text-sm'" class="text-gray-500 mt-1">{{ period }}</p>
+        </div>
+        <div v-if="trending" class="flex items-center text-emerald-600">
+          <TrendingUp class="w-4 h-4" />
         </div>
       </div>
 
       <!-- Valor Principal -->
-      <div class="mb-2">
-        <p class="text-gray-900 text-3xl">{{ value }}</p>
+      <div class="mb-3">
+        <p :class="compact ? 'text-lg font-bold' : 'text-3xl font-bold'" class="text-gray-900 group-hover:text-emerald-700 transition-colors">
+          {{ value }}
+        </p>
       </div>
 
-      <!-- Subtítulo -->
-      <p class="text-gray-600 text-sm">{{ subtitle }}</p>
+      <!-- Subtítulo com indicadores -->
+      <div class="flex items-center justify-between">
+        <p :class="compact ? 'text-xs leading-tight' : 'text-sm'" class="text-gray-600 flex-1">{{ subtitle }}</p>
+        <div v-if="showGrowth" class="flex items-center text-emerald-600 text-sm font-medium">
+          <ArrowUpRight class="w-4 h-4 mr-1" />
+          +15
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { TrendingUp, ArrowUpRight } from 'lucide-vue-next'
 
 interface Props {
   icon: any
@@ -33,15 +45,33 @@ interface Props {
   value: string
   subtitle: string
   color: 'green' | 'blue' | 'orange'
+  compact?: boolean
+  trending?: boolean
+  showGrowth?: boolean
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  compact: false,
+  trending: false,
+  showGrowth: false
+})
 
-const colorClasses = computed(() => {
+const cardClasses = computed(() => {
+  const baseClasses = 'bg-white rounded-xl border border-gray-100 hover:border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1'
+  const gradients = {
+    green: 'hover:bg-gradient-to-br hover:from-emerald-50 hover:to-white',
+    blue: 'hover:bg-gradient-to-br hover:from-blue-50 hover:to-white',
+    orange: 'hover:bg-gradient-to-br hover:from-orange-50 hover:to-white'
+  }
+  return `${baseClasses} ${gradients[props.color]}`
+})
+
+const iconClasses = computed(() => {
+  const padding = props.compact ? 'p-2' : 'p-2.5'
   const classes = {
-    green: 'bg-emerald-50 text-emerald-700 border-emerald-200 p-2.5 rounded-lg',
-    blue: 'bg-blue-50 text-blue-700 border-blue-200 p-2.5 rounded-lg',
-    orange: 'bg-orange-50 text-orange-700 border-orange-200 p-2.5 rounded-lg',
+    green: `bg-gradient-to-br from-emerald-500 to-emerald-600 text-white ${padding} rounded-xl shadow-sm`,
+    blue: `bg-gradient-to-br from-blue-500 to-blue-600 text-white ${padding} rounded-xl shadow-sm`,
+    orange: `bg-gradient-to-br from-orange-500 to-orange-600 text-white ${padding} rounded-xl shadow-sm`,
   }
   return classes[props.color]
 })
