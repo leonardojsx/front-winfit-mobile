@@ -6,7 +6,7 @@ import NovaReceita from '@/views/NovaReceita.vue'
 import ProductSheet from '@/views/ProductSheet.vue'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory('/front-winfit-mobile/'),
   routes: [
     {
       path: '/',
