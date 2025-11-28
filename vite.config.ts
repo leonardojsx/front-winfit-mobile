@@ -5,6 +5,7 @@ import { resolve } from 'path'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue()],
+  base: '/front-winfit-mobile/',
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),

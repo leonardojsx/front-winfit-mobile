@@ -114,7 +114,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Cloud, Wind, Droplets, MapPin, Thermometer, ChevronDown, ChevronUp } from 'lucide-vue-next'
+import { Cloud, Wind, Droplets, MapPin, Thermometer, ChevronDown } from 'lucide-vue-next'
 
 const expanded = ref(false)
 
