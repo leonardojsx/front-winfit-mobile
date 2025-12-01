@@ -1,5 +1,5 @@
 <template>
-  <main class="pt-16 pb-6 px-4">
+  <main class="pt-16 pb-6 px-4 bg-gray-50 dark:bg-gray-900 min-h-screen">
     <div class="max-w-md mx-auto">
       <!-- Botão Nova Receita -->
       <div class="pt-4 mb-4">
@@ -19,22 +19,22 @@
             <input
               type="date"
               placeholder="Data inicial"
-              class="w-full pl-10 pr-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+              class="w-full pl-10 pr-3 py-2 border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg text-sm focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
             />
           </div>
           <div class="relative">
-            <Calendar class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <Calendar class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 dark:text-gray-500" />
             <input
               type="date"
               placeholder="Data final"
-              class="w-full pl-10 pr-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+              class="w-full pl-10 pr-3 py-2 border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg text-sm focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
             />
           </div>
         </div>
 
         <select 
           v-model="selectedStatus"
-          class="w-full h-10 px-3 border border-gray-200 rounded-lg text-sm text-gray-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+          class="w-full h-10 px-3 border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-lg text-sm focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
         >
           <option value="">Selecionar...</option>
           <option value="rascunho">Rascunhos</option>
@@ -43,29 +43,29 @@
         </select>
 
         <div class="relative">
-          <Search class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+          <Search class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 dark:text-gray-500" />
           <input
             v-model="searchTerm"
             type="text"
             placeholder="Buscar receita..."
-            class="w-full pl-10 pr-3 py-2 border border-gray-200 rounded-lg focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+            class="w-full pl-10 pr-3 py-2 border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
           />
         </div>
       </div>
 
       <!-- Cards de Status -->
       <div class="grid grid-cols-3 gap-3 mb-4">
-        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-center">
-          <div class="text-2xl text-gray-900 mb-1">{{ statusCounts.rascunhos }}</div>
-          <p class="text-xs text-gray-600">Rascunhos</p>
+        <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg p-4 text-center">
+          <div class="text-2xl text-gray-900 dark:text-gray-100 mb-1">{{ statusCounts.rascunhos }}</div>
+          <p class="text-xs text-gray-600 dark:text-gray-400">Rascunhos</p>
         </div>
-        <div class="bg-emerald-50 border border-emerald-200 rounded-lg p-4 text-center">
-          <div class="text-2xl text-gray-900 mb-1">{{ statusCounts.finalizadas }}</div>
-          <p class="text-xs text-gray-600">Finalizadas</p>
+        <div class="bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-700 rounded-lg p-4 text-center">
+          <div class="text-2xl text-gray-900 dark:text-gray-100 mb-1">{{ statusCounts.finalizadas }}</div>
+          <p class="text-xs text-gray-600 dark:text-gray-400">Finalizadas</p>
         </div>
-        <div class="bg-red-50 border border-red-200 rounded-lg p-4 text-center">
-          <div class="text-2xl text-gray-900 mb-1">{{ statusCounts.canceladas }}</div>
-          <p class="text-xs text-gray-600">Canceladas</p>
+        <div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg p-4 text-center">
+          <div class="text-2xl text-gray-900 dark:text-gray-100 mb-1">{{ statusCounts.canceladas }}</div>
+          <p class="text-xs text-gray-600 dark:text-gray-400">Canceladas</p>
         </div>
       </div>
 
@@ -74,14 +74,14 @@
         <div 
           v-for="receita in mockReceitas" 
           :key="receita.id"
-          class="bg-white shadow-sm hover:shadow-md transition-shadow rounded-lg"
+          class="bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-shadow rounded-lg border border-transparent dark:border-gray-700"
         >
           <div class="p-4">
             <!-- Header -->
             <div class="flex items-start justify-between mb-3">
               <div>
-                <h3 class="text-gray-900 mb-1">Receita {{ receita.numero }}</h3>
-                <p class="text-gray-600 text-sm">{{ receita.data }}</p>
+                <h3 class="text-gray-900 dark:text-gray-100 mb-1">Receita {{ receita.numero }}</h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm">{{ receita.data }}</p>
               </div>
               <div 
                 class="w-3 h-3 rounded-full"
@@ -92,30 +92,30 @@
             <!-- Informações -->
             <div class="space-y-2 mb-4">
               <div>
-                <p class="text-xs text-gray-500">Cliente</p>
-                <p class="text-sm text-gray-900">{{ receita.cliente }}</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Cliente</p>
+                <p class="text-sm text-gray-900 dark:text-gray-100">{{ receita.cliente }}</p>
               </div>
               <div>
-                <p class="text-xs text-gray-500">Responsável Técnico</p>
-                <p class="text-sm text-gray-900">{{ receita.responsavelTecnico }}</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Responsável Técnico</p>
+                <p class="text-sm text-gray-900 dark:text-gray-100">{{ receita.responsavelTecnico }}</p>
               </div>
               <div>
-                <p class="text-xs text-gray-500">Envio</p>
-                <p class="text-sm text-gray-900">{{ receita.envio }}</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Envio</p>
+                <p class="text-sm text-gray-900 dark:text-gray-100">{{ receita.envio }}</p>
               </div>
             </div>
 
             <!-- Ações -->
             <div class="flex gap-2">
-              <button class="flex-1 border border-gray-200 hover:bg-gray-50 px-3 py-2 rounded-lg text-sm flex items-center justify-center gap-1">
+              <button class="flex-1 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-2 rounded-lg text-sm flex items-center justify-center gap-1">
                 <Eye class="w-4 h-4" />
                 Visualizar
               </button>
-              <button class="flex-1 border border-gray-200 hover:bg-gray-50 px-3 py-2 rounded-lg text-sm flex items-center justify-center gap-1">
+              <button class="flex-1 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-2 rounded-lg text-sm flex items-center justify-center gap-1">
                 <Edit class="w-4 h-4" />
                 Editar
               </button>
-              <button class="border border-gray-200 hover:bg-gray-50 px-3 py-2 rounded-lg text-sm">
+              <button class="border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-2 rounded-lg text-sm">
                 <Settings class="w-4 h-4" />
               </button>
             </div>

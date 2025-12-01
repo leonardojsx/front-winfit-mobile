@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-full bg-white">
+  <div class="flex flex-col h-full bg-white dark:bg-gray-900">
     <!-- Header do Menu -->
     <div class="bg-emerald-700 p-6">
       <h2 class="text-white font-semibold">WINFIT</h2>
@@ -13,9 +13,9 @@
         :key="item.label"
         :to="item.route || '#'"
         @click="handleItemClick(item.route)"
-        class="w-full flex items-center gap-3 px-6 py-3.5 transition-colors hover:bg-gray-50"
+        class="w-full flex items-center gap-3 px-6 py-3.5 transition-colors hover:bg-gray-50 dark:hover:bg-gray-800"
         :class="[
-          item.active ? 'bg-emerald-50 text-emerald-700 border-l-4 border-emerald-700' : 'text-gray-700'
+          item.active ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 border-l-4 border-emerald-700 dark:border-emerald-500' : 'text-gray-700 dark:text-gray-300'
         ]"
       >
         <component :is="item.icon" class="w-5 h-5" />
@@ -24,10 +24,10 @@
     </nav>
 
     <!-- Botão Sair -->
-    <div class="border-t border-gray-200">
+    <div class="border-t border-gray-200 dark:border-gray-700">
       <button
         @click="$emit('close')"
-        class="w-full flex items-center gap-3 px-6 py-4 text-red-600 hover:bg-red-50 transition-colors"
+        class="w-full flex items-center gap-3 px-6 py-4 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
       >
         <LogOut class="w-5 h-5" />
         <span>Sair</span>

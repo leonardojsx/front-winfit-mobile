@@ -1,5 +1,5 @@
 <template>
-  <main class="pt-20 pb-8 px-4 bg-gradient-to-br from-gray-50 via-emerald-50/30 to-gray-50 min-h-screen">
+  <main class="pt-20 pb-8 px-4 bg-gradient-to-br from-gray-50 via-emerald-50/30 to-gray-50 dark:from-gray-900 dark:via-gray-800/30 dark:to-gray-900 min-h-screen transition-colors duration-300">
     <div class="max-w-md mx-auto">
       <!-- Grid de Cards Principal -->
       <div class="space-y-6">

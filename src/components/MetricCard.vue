@@ -7,8 +7,8 @@
           <component :is="icon" :class="compact ? 'w-4 h-4' : 'w-6 h-6'" />
         </div>
         <div class="flex-1 min-w-0">
-          <h3 :class="compact ? 'text-sm font-medium leading-tight' : 'text-base font-medium'" class="text-gray-900">{{ title }}</h3>
-          <p v-if="period" :class="compact ? 'text-xs' : 'text-sm'" class="text-gray-500 mt-1">{{ period }}</p>
+          <h3 :class="compact ? 'text-sm font-medium leading-tight' : 'text-base font-medium'" class="text-gray-900 dark:text-gray-100">{{ title }}</h3>
+          <p v-if="period" :class="compact ? 'text-xs' : 'text-sm'" class="text-gray-500 dark:text-gray-400 mt-1">{{ period }}</p>
         </div>
         <div v-if="trending" class="flex items-center text-emerald-600">
           <TrendingUp class="w-4 h-4" />
@@ -17,7 +17,7 @@
 
       <!-- Valor Principal -->
       <div class="mb-3">
-        <p :class="compact ? 'text-lg font-bold' : 'text-3xl font-bold'" class="text-gray-900 group-hover:text-emerald-700 transition-colors">
+        <p :class="compact ? 'text-lg font-bold' : 'text-3xl font-bold'" class="text-gray-900 dark:text-gray-100 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors">
           {{ value }}
         </p>
       </div>
@@ -57,11 +57,11 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const cardClasses = computed(() => {
-  const baseClasses = 'bg-white rounded-xl border border-gray-100 hover:border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1'
+  const baseClasses = 'bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 hover:border-gray-200 dark:hover:border-gray-600 shadow-sm hover:shadow-lg dark:shadow-gray-900/10 transition-all duration-300 transform hover:-translate-y-1'
   const gradients = {
-    green: 'hover:bg-gradient-to-br hover:from-emerald-50 hover:to-white',
-    blue: 'hover:bg-gradient-to-br hover:from-blue-50 hover:to-white',
-    orange: 'hover:bg-gradient-to-br hover:from-orange-50 hover:to-white'
+    green: 'hover:bg-gradient-to-br hover:from-emerald-50 hover:to-white dark:hover:from-emerald-950/30 dark:hover:to-gray-800',
+    blue: 'hover:bg-gradient-to-br hover:from-blue-50 hover:to-white dark:hover:from-blue-950/30 dark:hover:to-gray-800',
+    orange: 'hover:bg-gradient-to-br hover:from-orange-50 hover:to-white dark:hover:from-orange-950/30 dark:hover:to-gray-800'
   }
   return `${baseClasses} ${gradients[props.color]}`
 })

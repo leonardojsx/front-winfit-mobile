@@ -1,15 +1,15 @@
 <template>
-  <main class="pt-16 pb-6 px-4">
+  <main class="pt-16 pb-6 px-4 min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
     <div class="max-w-md mx-auto">
       <!-- Campo de Busca -->
       <div class="mb-4 pt-4">
         <div class="relative">
-          <Search class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+          <Search class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 dark:text-gray-500" />
           <input
             type="text"
             placeholder="Nome / Nº Registro"
             v-model="searchTerm"
-            class="w-full pl-10 h-10 border border-emerald-200 focus:border-emerald-500 focus:ring-emerald-500 rounded-lg px-3 text-sm"
+            class="w-full pl-10 h-10 border border-emerald-200 dark:border-gray-600 focus:border-emerald-500 focus:ring-emerald-500 rounded-lg px-3 text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
           />
         </div>
       </div>
@@ -19,7 +19,7 @@
         <div
           v-for="product in filteredProducts"
           :key="product.id"
-          class="bg-white shadow-sm hover:shadow-md transition-shadow cursor-pointer overflow-hidden rounded-lg border border-gray-200"
+          class="bg-white dark:bg-gray-800 shadow-sm hover:shadow-md dark:shadow-gray-900/10 transition-shadow cursor-pointer overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700"
           @click="selectProduct(product)"
         >
           <div class="flex">
@@ -28,15 +28,15 @@
             
             <!-- Conteúdo do Card -->
             <div class="flex-1 p-4">
-              <h3 class="text-gray-900 mb-1">{{ product.name }}</h3>
-              <p class="text-gray-600 text-sm">{{ product.registryNumber }}</p>
+              <h3 class="text-gray-900 dark:text-gray-100 mb-1">{{ product.name }}</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">{{ product.registryNumber }}</p>
             </div>
           </div>
         </div>
       </div>
 
       <div v-if="filteredProducts.length === 0" class="text-center py-12">
-        <p class="text-gray-500">Nenhum produto encontrado</p>
+        <p class="text-gray-500 dark:text-gray-400">Nenhum produto encontrado</p>
       </div>
     </div>
   </main>

@@ -140,6 +140,36 @@ body {
   }
 }
 
+/* Variáveis CSS para temas */
+:root {
+  --bg-primary: theme('colors.white');
+  --bg-secondary: theme('colors.gray.50');
+  --text-primary: theme('colors.gray.900');
+  --text-secondary: theme('colors.gray.600');
+  --border-primary: theme('colors.gray.200');
+}
+
+.dark {
+  --bg-primary: theme('colors.gray.800');
+  --bg-secondary: theme('colors.gray.900');
+  --text-primary: theme('colors.gray.100');
+  --text-secondary: theme('colors.gray.300');
+  --border-primary: theme('colors.gray.700');
+}
+
+/* Scrollbar no tema escuro */
+.dark .overflow-y-auto::-webkit-scrollbar-track {
+  background: #374151;
+}
+
+.dark .overflow-y-auto::-webkit-scrollbar-thumb {
+  background: #6b7280;
+}
+
+.dark .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
 /* Animações especificas para WeatherCard */
 .weather-expanded {
   animation: weather-expand 0.4s ease-out forwards;

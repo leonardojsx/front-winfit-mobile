@@ -1,18 +1,18 @@
 <template>
-  <main class="pt-16 pb-6 px-4">
+  <main class="pt-16 pb-6 px-4 bg-gray-50 dark:bg-gray-900 min-h-screen">
     <div class="max-w-md mx-auto">
       <!-- Cabeçalho do Produto -->
       <div class="mb-6 pt-4">
-        <h2 class="text-gray-900 mb-3">{{ product.name }}</h2>
+        <h2 class="text-gray-900 dark:text-gray-100 mb-3">{{ product.name }}</h2>
         <div class="space-y-1">
-          <p class="text-gray-600 text-sm">
-            <span class="text-gray-900">Registro MAPA:</span> {{ product.mapaRegistry }}
+          <p class="text-gray-600 dark:text-gray-400 text-sm">
+            <span class="text-gray-900 dark:text-gray-100">Registro MAPA:</span> {{ product.mapaRegistry }}
           </p>
-          <p class="text-gray-600 text-sm">
-            <span class="text-gray-900">Titular:</span> {{ product.holder }}
+          <p class="text-gray-600 dark:text-gray-400 text-sm">
+            <span class="text-gray-900 dark:text-gray-100">Titular:</span> {{ product.holder }}
           </p>
-          <p class="text-gray-600 text-sm">
-            <span class="text-gray-900">Última revisão:</span> {{ product.lastRevision }}
+          <p class="text-gray-600 dark:text-gray-400 text-sm">
+            <span class="text-gray-900 dark:text-gray-100">Última revisão:</span> {{ product.lastRevision }}
           </p>
         </div>
       </div>
@@ -28,7 +28,7 @@
             :class="[
               activeTab === tab.id
                 ? 'bg-emerald-600 text-white'
-                : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50'
+                : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
             ]"
           >
             {{ tab.label }}
@@ -39,95 +39,95 @@
       <!-- Conteúdo da Aba Ativa -->
       <div v-if="activeTab === 'geral'" class="space-y-3 mb-6">
         <!-- Ingredientes Ativos -->
-        <div class="bg-white shadow-sm p-4 rounded-lg border border-gray-200">
-          <h3 class="text-gray-900 mb-2 text-sm">Ingredientes Ativos</h3>
+        <div class="bg-white dark:bg-gray-800 shadow-sm p-4 rounded-lg border border-gray-200 dark:border-gray-700">
+          <h3 class="text-gray-900 dark:text-gray-100 mb-2 text-sm">Ingredientes Ativos</h3>
           <div class="space-y-1">
-            <p v-for="ingredient in product.activeIngredients" :key="ingredient" class="text-gray-700">
+            <p v-for="ingredient in product.activeIngredients" :key="ingredient" class="text-gray-700 dark:text-gray-300">
               {{ ingredient }}
             </p>
           </div>
         </div>
 
         <!-- Grupos Químicos -->
-        <div class="bg-white shadow-sm p-4 rounded-lg border border-gray-200">
-          <h3 class="text-gray-900 mb-2 text-sm">Grupos Químicos</h3>
+        <div class="bg-white dark:bg-gray-800 shadow-sm p-4 rounded-lg border border-gray-200 dark:border-gray-700">
+          <h3 class="text-gray-900 dark:text-gray-100 mb-2 text-sm">Grupos Químicos</h3>
           <div class="space-y-1">
-            <p v-for="group in product.chemicalGroups" :key="group" class="text-gray-700">
+            <p v-for="group in product.chemicalGroups" :key="group" class="text-gray-700 dark:text-gray-300">
               {{ group }}
             </p>
           </div>
         </div>
 
         <!-- Classe de Ação -->
-        <div class="bg-white shadow-sm p-4 rounded-lg border border-gray-200">
-          <h3 class="text-gray-900 mb-2 text-sm">Classe de Ação</h3>
-          <p class="text-gray-700">{{ product.actionClass }}</p>
+        <div class="bg-white dark:bg-gray-800 shadow-sm p-4 rounded-lg border border-gray-200 dark:border-gray-700">
+          <h3 class="text-gray-900 dark:text-gray-100 mb-2 text-sm">Classe de Ação</h3>
+          <p class="text-gray-700 dark:text-gray-300">{{ product.actionClass }}</p>
         </div>
 
         <!-- Classe Toxicológica -->
-        <div class="bg-white shadow-sm p-4 rounded-lg border border-gray-200">
-          <h3 class="text-gray-900 mb-2 text-sm">Classe Toxicológica</h3>
-          <p class="text-gray-700">{{ product.toxicologicalClass }}</p>
+        <div class="bg-white dark:bg-gray-800 shadow-sm p-4 rounded-lg border border-gray-200 dark:border-gray-700">
+          <h3 class="text-gray-900 dark:text-gray-100 mb-2 text-sm">Classe Toxicológica</h3>
+          <p class="text-gray-700 dark:text-gray-300">{{ product.toxicologicalClass }}</p>
         </div>
 
         <!-- Concentração -->
-        <div class="bg-white shadow-sm p-4 rounded-lg border border-gray-200">
-          <h3 class="text-gray-900 mb-2 text-sm">Concentração</h3>
-          <p class="text-gray-700">{{ product.concentration }}</p>
+        <div class="bg-white dark:bg-gray-800 shadow-sm p-4 rounded-lg border border-gray-200 dark:border-gray-700">
+          <h3 class="text-gray-900 dark:text-gray-100 mb-2 text-sm">Concentração</h3>
+          <p class="text-gray-700 dark:text-gray-300">{{ product.concentration }}</p>
         </div>
 
         <!-- Formulação -->
-        <div class="bg-white shadow-sm p-4 rounded-lg border border-gray-200">
-          <h3 class="text-gray-900 mb-2 text-sm">Formulação</h3>
-          <p class="text-gray-700">{{ product.formulation }}</p>
+        <div class="bg-white dark:bg-gray-800 shadow-sm p-4 rounded-lg border border-gray-200 dark:border-gray-700">
+          <h3 class="text-gray-900 dark:text-gray-100 mb-2 text-sm">Formulação</h3>
+          <p class="text-gray-700 dark:text-gray-300">{{ product.formulation }}</p>
         </div>
 
         <!-- Modo de Ação -->
-        <div class="bg-white shadow-sm p-4 rounded-lg border border-gray-200">
-          <h3 class="text-gray-900 mb-2 text-sm">Modo de Ação</h3>
-          <p class="text-gray-700">{{ product.actionMode }}</p>
+        <div class="bg-white dark:bg-gray-800 shadow-sm p-4 rounded-lg border border-gray-200 dark:border-gray-700">
+          <h3 class="text-gray-900 dark:text-gray-100 mb-2 text-sm">Modo de Ação</h3>
+          <p class="text-gray-700 dark:text-gray-300">{{ product.actionMode }}</p>
         </div>
 
         <!-- Classe Ambiental -->
-        <div class="bg-white shadow-sm p-4 rounded-lg border border-gray-200">
-          <h3 class="text-gray-900 mb-2 text-sm">Classe Ambiental</h3>
-          <p class="text-gray-700">{{ product.environmentalClass }}</p>
+        <div class="bg-white dark:bg-gray-800 shadow-sm p-4 rounded-lg border border-gray-200 dark:border-gray-700">
+          <h3 class="text-gray-900 dark:text-gray-100 mb-2 text-sm">Classe Ambiental</h3>
+          <p class="text-gray-700 dark:text-gray-300">{{ product.environmentalClass }}</p>
         </div>
       </div>
 
       <div v-if="activeTab === 'cultura'" class="py-12 text-center">
-        <p class="text-gray-500">Informações de aplicação por cultura em breve</p>
+        <p class="text-gray-500 dark:text-gray-400">Informações de aplicação por cultura em breve</p>
       </div>
 
       <div v-if="activeTab === 'indicacoes'" class="py-12 text-center">
-        <p class="text-gray-500">Indicações de uso em breve</p>
+        <p class="text-gray-500 dark:text-gray-400">Indicações de uso em breve</p>
       </div>
 
       <div v-if="activeTab === 'modalidades'" class="py-12 text-center">
-        <p class="text-gray-500">Modalidades de aplicação em breve</p>
+        <p class="text-gray-500 dark:text-gray-400">Modalidades de aplicação em breve</p>
       </div>
 
       <div v-if="activeTab === 'restricoes'" class="py-12 text-center">
-        <p class="text-gray-500">Restrições por estado em breve</p>
+        <p class="text-gray-500 dark:text-gray-400">Restrições por estado em breve</p>
       </div>
 
       <div v-if="activeTab === 'adicionais'" class="py-12 text-center">
-        <p class="text-gray-500">Informações adicionais em breve</p>
+        <p class="text-gray-500 dark:text-gray-400">Informações adicionais em breve</p>
       </div>
 
       <!-- Botões de Ação -->
-      <div class="space-y-3 sticky bottom-0 bg-gray-50 py-4">
+      <div class="space-y-3 sticky bottom-0 bg-gray-50 dark:bg-gray-900 py-4">
         <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white h-10 rounded-lg px-4 font-medium transition-colors flex items-center justify-center">
           <Printer class="w-4 h-4 mr-2" />
           Imprimir Ficha
         </button>
         
-        <button class="w-full border border-emerald-600 text-emerald-700 hover:bg-emerald-50 h-10 rounded-lg px-4 font-medium transition-colors flex items-center justify-center">
+        <button class="w-full border border-emerald-600 dark:border-emerald-500 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950 h-10 rounded-lg px-4 font-medium transition-colors flex items-center justify-center">
           <FileText class="w-4 h-4 mr-2" />
           Imprimir Várias Fichas
         </button>
         
-        <button class="w-full border border-emerald-600 text-emerald-700 hover:bg-emerald-50 h-10 rounded-lg px-4 font-medium transition-colors flex items-center justify-center">
+        <button class="w-full border border-emerald-600 dark:border-emerald-500 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950 h-10 rounded-lg px-4 font-medium transition-colors flex items-center justify-center">
           <BarChart3 class="w-4 h-4 mr-2" />
           Relatório do Produto
         </button>
