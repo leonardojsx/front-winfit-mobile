@@ -5,6 +5,16 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script>
 import MobileHeader from '@/components/MobileHeader.vue'
+
+export default {
+  name: 'App',
+  components: {
+    MobileHeader
+  },
+  mounted() {
+    this.$store.dispatch('initializeTheme')
+  }
+}
 </script>

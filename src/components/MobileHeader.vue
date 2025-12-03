@@ -1,103 +1,115 @@
 <template>
-  <header class="fixed top-0 left-0 right-0 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700 z-40 shadow-sm">
-    <div class="flex items-center justify-between px-4 h-16">
-      <div class="flex items-center gap-3">
+  <div>
+    <header>
+      <div style="display: flex; align-items: center;">
         <button 
           v-if="showBackButton"
           @click="goBack"
-          class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+          class="menu-btn"
         >
-          <ArrowLeft class="w-6 h-6 text-gray-700 dark:text-gray-300" />
+          <ArrowLeftIcon style="width: 24px; height: 24px; color: #374151;" />
         </button>
         
         <button 
           v-else
           @click="toggleMenu"
-          class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors relative z-50"
+          class="menu-btn"
         >
-          <Menu class="w-6 h-6 text-gray-700 dark:text-gray-300" />
+          <MenuIcon style="width: 24px; height: 24px; color: #374151;" />
         </button>
 
-        <div>
-          <h1 class="text-emerald-700 dark:text-emerald-400 font-bold text-lg">WINFIT</h1>
-          <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">AgroRevenda</p>
+        <div class="logo">
+          <h1>WINFIT</h1>
+          <p>AgroRevenda</p>
         </div>
       </div>
 
-      <div class="flex items-center gap-3">
+      <div style="display: flex; align-items: center; gap: 12px;">
         <ThemeToggle />
-        <button class="bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white px-5 py-2.5 rounded-xl text-sm font-medium flex items-center gap-2 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105">
-          <ShoppingCart class="w-4 h-4" />
+        <button class="btn-pdv">
+          <ShoppingCartIcon style="width: 16px; height: 16px;" />
           PDV
         </button>
       </div>
-    </div>
-  </header>
+    </header>
 
-  <!-- Side Menu Overlay -->
-  <Transition name="fade">
-    <div 
-      v-if="isMenuOpen" 
-      class="fixed inset-0 bg-black bg-opacity-50 z-50"
-      @click="closeMenu"
-    />
-  </Transition>
-  
-  <!-- Side Menu -->
-  <Transition name="slide">
-    <div 
-      v-if="isMenuOpen"
-      class="fixed left-0 top-0 bottom-0 w-80 bg-white dark:bg-gray-900 shadow-2xl z-50"
-    >
-      <SideMenu @close="closeMenu" />
-    </div>
-  </Transition>
+    <!-- Side Menu Overlay -->
+    <transition name="fade">
+      <div 
+        v-if="isMenuOpen" 
+        class="menu-overlay"
+        @click="closeMenu"
+      />
+    </transition>
+    
+    <!-- Side Menu -->
+    <transition name="slide">
+      <SideMenu 
+        v-if="isMenuOpen"
+        @close="closeMenu" 
+      />
+    </transition>
+  </div>
 </template>
 
-<script setup lang="ts">
-import { ref, computed, watch } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
-import { Menu, ArrowLeft, ShoppingCart } from 'lucide-vue-next'
+<script>
+import { Menu, ArrowLeft, ShoppingCart } from 'lucide-vue'
 import SideMenu from './SideMenu.vue'
 import ThemeToggle from './ThemeToggle.vue'
 
-const router = useRouter()
-const route = useRoute()
-
-// Estado local do menu
-const isMenuOpen = ref(false)
-
-const showBackButton = computed(() => {
-  return route.name !== 'dashboard'
-})
-
-// Watch para controlar o scroll do body
-watch(isMenuOpen, (newValue) => {
-  if (newValue) {
-    document.body.style.overflow = 'hidden'
-  } else {
-    document.body.style.overflow = ''
-  }
-})
-
-const toggleMenu = () => {
-  console.log('Toggle clicked, current state:', isMenuOpen.value)
-  isMenuOpen.value = !isMenuOpen.value
-  console.log('New state:', isMenuOpen.value)
-}
-
-const closeMenu = () => {
-  console.log('Closing menu')
-  isMenuOpen.value = false
-}
-
-const goBack = () => {
-  if (route.name === 'product') {
-    router.push('/compendio')
-  } else if (route.name === 'nova-receita') {
-    router.push('/receitas')
-  } else {
-    router.push('/')
+export default {
+  name: 'MobileHeader',
+  components: {
+    MenuIcon: Menu,
+    ArrowLeftIcon: ArrowLeft,
+    ShoppingCartIcon: ShoppingCart,
+    SideMenu,
+    ThemeToggle
+  },
+  data() {
+    return {
+      isMenuOpen: false
+    }
+  },
+  computed: {
+    showBackButton() {
+      return this.$route.name !== 'dashboard'
+    }
+  },
+  watch: {
+    isMenuOpen(newValue) {
+      if (newValue) {
+        document.body.style.overflow = 'hidden'
+      } else {
+        document.body.style.overflow = ''
+      }
+    },
+    '$route'() {
+      // Fechar menu automaticamente quando a rota mudar
+      if (this.isMenuOpen) {
+        this.isMenuOpen = false
+      }
+    }
+  },
+  methods: {
+    toggleMenu() {
+      console.log('Toggle clicked, current state:', this.isMenuOpen)
+      this.isMenuOpen = !this.isMenuOpen
+      console.log('New state:', this.isMenuOpen)
+    },
+    closeMenu() {
+      console.log('Closing menu')
+      this.isMenuOpen = false
+    },
+    goBack() {
+      if (this.$route.name === 'product') {
+        this.$router.push('/compendio')
+      } else if (this.$route.name === 'nova-receita') {
+        this.$router.push('/receitas')
+      } else {
+        this.$router.push('/')
+      }
+    }
   }
 }
 </script>

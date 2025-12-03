@@ -1,12 +1,16 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import Vue from 'vue'
+import VueRouter from 'vue-router'
 import Dashboard from '@/views/Dashboard.vue'
 import Compendio from '@/views/Compendio.vue'
 import Receitas from '@/views/Receitas.vue'
 import NovaReceita from '@/views/NovaReceita.vue'
 import ProductSheet from '@/views/ProductSheet.vue'
 
-const router = createRouter({
-  history: createWebHistory('/front-winfit-mobile/'),
+Vue.use(VueRouter)
+
+const router = new VueRouter({
+  mode: 'history',
+  base: '/front-winfit-mobile/',
   routes: [
     {
       path: '/',

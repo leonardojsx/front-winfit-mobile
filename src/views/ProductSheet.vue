@@ -1,34 +1,31 @@
 <template>
-  <main class="pt-16 pb-6 px-4 bg-gray-50 dark:bg-gray-900 min-h-screen">
-    <div class="max-w-md mx-auto">
+  <main class="product-container">
       <!-- Cabeçalho do Produto -->
-      <div class="mb-6 pt-4">
-        <h2 class="text-gray-900 dark:text-gray-100 mb-3">{{ product.name }}</h2>
-        <div class="space-y-1">
-          <p class="text-gray-600 dark:text-gray-400 text-sm">
-            <span class="text-gray-900 dark:text-gray-100">Registro MAPA:</span> {{ product.mapaRegistry }}
+      <div class="product-header">
+        <h2 class="product-title">{{ product.name }}</h2>
+        <div class="product-info">
+          <p class="product-info-item">
+            <span class="product-info-label">Registro MAPA:</span> {{ product.mapaRegistry }}
           </p>
-          <p class="text-gray-600 dark:text-gray-400 text-sm">
-            <span class="text-gray-900 dark:text-gray-100">Titular:</span> {{ product.holder }}
+          <p class="product-info-item">
+            <span class="product-info-label">Titular:</span> {{ product.holder }}
           </p>
-          <p class="text-gray-600 dark:text-gray-400 text-sm">
-            <span class="text-gray-900 dark:text-gray-100">Última revisão:</span> {{ product.lastRevision }}
+          <p class="product-info-item">
+            <span class="product-info-label">Última revisão:</span> {{ product.lastRevision }}
           </p>
         </div>
       </div>
 
       <!-- Abas de Navegação -->
-      <div class="mb-4 overflow-x-auto">
-        <div class="flex gap-2 pb-2">
+      <div class="tabs-container">
+        <div class="tabs-list">
           <button
             v-for="tab in tabs"
             :key="tab.id"
             @click="activeTab = tab.id"
-            class="flex-shrink-0 px-4 py-2 rounded-lg text-sm transition-colors whitespace-nowrap"
             :class="[
-              activeTab === tab.id
-                ? 'bg-emerald-600 text-white'
-                : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+              'tab-button',
+              activeTab === tab.id ? 'active' : 'inactive'
             ]"
           >
             {{ tab.label }}
@@ -37,114 +34,118 @@
       </div>
 
       <!-- Conteúdo da Aba Ativa -->
-      <div v-if="activeTab === 'geral'" class="space-y-3 mb-6">
+      <div v-if="activeTab === 'geral'" class="content-section">
         <!-- Ingredientes Ativos -->
-        <div class="bg-white dark:bg-gray-800 shadow-sm p-4 rounded-lg border border-gray-200 dark:border-gray-700">
-          <h3 class="text-gray-900 dark:text-gray-100 mb-2 text-sm">Ingredientes Ativos</h3>
-          <div class="space-y-1">
-            <p v-for="ingredient in product.activeIngredients" :key="ingredient" class="text-gray-700 dark:text-gray-300">
+        <div class="info-card">
+          <h3 class="info-card-title">Ingredientes Ativos</h3>
+          <div class="info-card-content">
+            <p v-for="ingredient in product.activeIngredients" :key="ingredient" class="info-card-item">
               {{ ingredient }}
             </p>
           </div>
         </div>
 
         <!-- Grupos Químicos -->
-        <div class="bg-white dark:bg-gray-800 shadow-sm p-4 rounded-lg border border-gray-200 dark:border-gray-700">
-          <h3 class="text-gray-900 dark:text-gray-100 mb-2 text-sm">Grupos Químicos</h3>
-          <div class="space-y-1">
-            <p v-for="group in product.chemicalGroups" :key="group" class="text-gray-700 dark:text-gray-300">
+        <div class="info-card">
+          <h3 class="info-card-title">Grupos Químicos</h3>
+          <div class="info-card-content">
+            <p v-for="group in product.chemicalGroups" :key="group" class="info-card-item">
               {{ group }}
             </p>
           </div>
         </div>
 
         <!-- Classe de Ação -->
-        <div class="bg-white dark:bg-gray-800 shadow-sm p-4 rounded-lg border border-gray-200 dark:border-gray-700">
-          <h3 class="text-gray-900 dark:text-gray-100 mb-2 text-sm">Classe de Ação</h3>
-          <p class="text-gray-700 dark:text-gray-300">{{ product.actionClass }}</p>
+        <div class="info-card">
+          <h3 class="info-card-title">Classe de Ação</h3>
+          <p class="info-card-item">{{ product.actionClass }}</p>
         </div>
 
         <!-- Classe Toxicológica -->
-        <div class="bg-white dark:bg-gray-800 shadow-sm p-4 rounded-lg border border-gray-200 dark:border-gray-700">
-          <h3 class="text-gray-900 dark:text-gray-100 mb-2 text-sm">Classe Toxicológica</h3>
-          <p class="text-gray-700 dark:text-gray-300">{{ product.toxicologicalClass }}</p>
+        <div class="info-card">
+          <h3 class="info-card-title">Classe Toxicológica</h3>
+          <p class="info-card-item">{{ product.toxicologicalClass }}</p>
         </div>
 
         <!-- Concentração -->
-        <div class="bg-white dark:bg-gray-800 shadow-sm p-4 rounded-lg border border-gray-200 dark:border-gray-700">
-          <h3 class="text-gray-900 dark:text-gray-100 mb-2 text-sm">Concentração</h3>
-          <p class="text-gray-700 dark:text-gray-300">{{ product.concentration }}</p>
+        <div class="info-card">
+          <h3 class="info-card-title">Concentração</h3>
+          <p class="info-card-item">{{ product.concentration }}</p>
         </div>
 
         <!-- Formulação -->
-        <div class="bg-white dark:bg-gray-800 shadow-sm p-4 rounded-lg border border-gray-200 dark:border-gray-700">
-          <h3 class="text-gray-900 dark:text-gray-100 mb-2 text-sm">Formulação</h3>
-          <p class="text-gray-700 dark:text-gray-300">{{ product.formulation }}</p>
+        <div class="info-card">
+          <h3 class="info-card-title">Formulação</h3>
+          <p class="info-card-item">{{ product.formulation }}</p>
         </div>
 
         <!-- Modo de Ação -->
-        <div class="bg-white dark:bg-gray-800 shadow-sm p-4 rounded-lg border border-gray-200 dark:border-gray-700">
-          <h3 class="text-gray-900 dark:text-gray-100 mb-2 text-sm">Modo de Ação</h3>
-          <p class="text-gray-700 dark:text-gray-300">{{ product.actionMode }}</p>
+        <div class="info-card">
+          <h3 class="info-card-title">Modo de Ação</h3>
+          <p class="info-card-item">{{ product.actionMode }}</p>
         </div>
 
         <!-- Classe Ambiental -->
-        <div class="bg-white dark:bg-gray-800 shadow-sm p-4 rounded-lg border border-gray-200 dark:border-gray-700">
-          <h3 class="text-gray-900 dark:text-gray-100 mb-2 text-sm">Classe Ambiental</h3>
-          <p class="text-gray-700 dark:text-gray-300">{{ product.environmentalClass }}</p>
+        <div class="info-card">
+          <h3 class="info-card-title">Classe Ambiental</h3>
+          <p class="info-card-item">{{ product.environmentalClass }}</p>
         </div>
       </div>
 
-      <div v-if="activeTab === 'cultura'" class="py-12 text-center">
-        <p class="text-gray-500 dark:text-gray-400">Informações de aplicação por cultura em breve</p>
+      <div v-if="activeTab === 'cultura'" class="empty-state">
+        <p>Informações de aplicação por cultura em breve</p>
       </div>
 
-      <div v-if="activeTab === 'indicacoes'" class="py-12 text-center">
-        <p class="text-gray-500 dark:text-gray-400">Indicações de uso em breve</p>
+      <div v-if="activeTab === 'indicacoes'" class="empty-state">
+        <p>Indicações de uso em breve</p>
       </div>
 
-      <div v-if="activeTab === 'modalidades'" class="py-12 text-center">
-        <p class="text-gray-500 dark:text-gray-400">Modalidades de aplicação em breve</p>
+      <div v-if="activeTab === 'modalidades'" class="empty-state">
+        <p>Modalidades de aplicação em breve</p>
       </div>
 
-      <div v-if="activeTab === 'restricoes'" class="py-12 text-center">
-        <p class="text-gray-500 dark:text-gray-400">Restrições por estado em breve</p>
+      <div v-if="activeTab === 'restricoes'" class="empty-state">
+        <p>Restrições por estado em breve</p>
       </div>
 
-      <div v-if="activeTab === 'adicionais'" class="py-12 text-center">
-        <p class="text-gray-500 dark:text-gray-400">Informações adicionais em breve</p>
+      <div v-if="activeTab === 'adicionais'" class="empty-state">
+        <p>Informações adicionais em breve</p>
       </div>
 
       <!-- Botões de Ação -->
-      <div class="space-y-3 sticky bottom-0 bg-gray-50 dark:bg-gray-900 py-4">
-        <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white h-10 rounded-lg px-4 font-medium transition-colors flex items-center justify-center">
-          <Printer class="w-4 h-4 mr-2" />
+      <div class="action-buttons">
+        <button class="action-button primary">
+          <Printer />
           Imprimir Ficha
         </button>
         
-        <button class="w-full border border-emerald-600 dark:border-emerald-500 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950 h-10 rounded-lg px-4 font-medium transition-colors flex items-center justify-center">
-          <FileText class="w-4 h-4 mr-2" />
+        <button class="action-button secondary">
+          <FileText />
           Imprimir Várias Fichas
         </button>
         
-        <button class="w-full border border-emerald-600 dark:border-emerald-500 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950 h-10 rounded-lg px-4 font-medium transition-colors flex items-center justify-center">
-          <BarChart3 class="w-4 h-4 mr-2" />
+        <button class="action-button secondary">
+          <BarChart3 />
           Relatório do Produto
         </button>
       </div>
-    </div>
   </main>
 </template>
 
-<script setup lang="ts">
-import { ref, computed } from 'vue'
-import { useRoute } from 'vue-router'
-import { Printer, FileText, BarChart3 } from 'lucide-vue-next'
-import type { Product } from '@/types'
+<script>
+import { Printer, FileText, BarChart3 } from 'lucide-vue'
 
-const route = useRoute()
-
-const mockProducts: Product[] = [
+export default {
+  name: 'ProductSheet',
+  components: {
+    Printer,
+    FileText,
+    BarChart3
+  },
+  data() {
+    return {
+      activeTab: 'geral',
+      mockProducts: [
   {
     id: '1',
     name: 'ACTARA 10 GR',
@@ -246,24 +247,22 @@ const mockProducts: Product[] = [
     formulation: 'Suspensão Concentrada (SC)',
     actionMode: 'Contato, ingestão e sistêmico',
     environmentalClass: 'Classe II - Produto muito perigoso',
+  }],
+      tabs: [
+        { id: 'geral', label: 'Informações Gerais' },
+        { id: 'cultura', label: 'Aplicação por Cultura' },
+        { id: 'indicacoes', label: 'Indicações' },
+        { id: 'modalidades', label: 'Modalidades de Aplicação' },
+        { id: 'restricoes', label: 'Restrições por Estado' },
+        { id: 'adicionais', label: 'Informações Adicionais' },
+      ]
+    }
   },
-]
-
-const product = computed(() => {
-  const productId = route.params.id as string
-  return mockProducts.find(p => p.id === productId) || mockProducts[0]
-})
-
-type Tab = 'geral' | 'cultura' | 'indicacoes' | 'modalidades' | 'restricoes' | 'adicionais'
-
-const activeTab = ref<Tab>('geral')
-
-const tabs = [
-  { id: 'geral' as const, label: 'Informações Gerais' },
-  { id: 'cultura' as const, label: 'Aplicação por Cultura' },
-  { id: 'indicacoes' as const, label: 'Indicações' },
-  { id: 'modalidades' as const, label: 'Modalidades de Aplicação' },
-  { id: 'restricoes' as const, label: 'Restrições por Estado' },
-  { id: 'adicionais' as const, label: 'Informações Adicionais' },
-]
+  computed: {
+    product() {
+      const productId = this.$route.params.id
+      return this.mockProducts.find(p => p.id === productId) || this.mockProducts[0]
+    }
+  }
+}
 </script>

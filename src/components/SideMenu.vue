@@ -1,43 +1,40 @@
 <template>
-  <div class="flex flex-col h-full bg-white dark:bg-gray-900">
+  <div class="side-menu">
     <!-- Header do Menu -->
-    <div class="bg-emerald-700 p-6">
-      <h2 class="text-white font-semibold">WINFIT</h2>
-      <p class="text-emerald-100 text-sm">AgroRevenda</p>
+    <div class="menu-header">
+      <h2>WINFIT</h2>
+      <p>AgroRevenda</p>
     </div>
 
     <!-- Itens do Menu -->
-    <nav class="flex-1 overflow-y-auto py-2">
+    <nav class="menu-nav">
       <router-link
         v-for="item in menuItems"
         :key="item.label"
         :to="item.route || '#'"
         @click="handleItemClick(item.route)"
-        class="w-full flex items-center gap-3 px-6 py-3.5 transition-colors hover:bg-gray-50 dark:hover:bg-gray-800"
-        :class="[
-          item.active ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 border-l-4 border-emerald-700 dark:border-emerald-500' : 'text-gray-700 dark:text-gray-300'
-        ]"
+        class="menu-item"
+        :class="{ 'active': $route.path === item.route }"
       >
-        <component :is="item.icon" class="w-5 h-5" />
+        <component :is="item.icon" style="width: 20px; height: 20px;" />
         <span>{{ item.label }}</span>
       </router-link>
     </nav>
 
     <!-- Botão Sair -->
-    <div class="border-t border-gray-200 dark:border-gray-700">
+    <div class="menu-footer">
       <button
         @click="$emit('close')"
-        class="w-full flex items-center gap-3 px-6 py-4 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+        class="menu-logout"
       >
-        <LogOut class="w-5 h-5" />
+        <LogOutIcon style="width: 20px; height: 20px;" />
         <span>Sair</span>
       </button>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
-import { useRouter } from 'vue-router'
+<script>
 import { 
   Home, 
   Book, 
@@ -53,34 +50,52 @@ import {
   Wallet,
   BarChart3,
   LogOut
-} from 'lucide-vue-next'
+} from 'lucide-vue'
 
-const router = useRouter()
-
-const emit = defineEmits<{
-  close: []
-}>()
-
-const menuItems = [
-  { icon: Home, label: 'Início', route: '/', active: false },
-  { icon: Book, label: 'Compêndio', route: '/compendio', active: false },
-  { icon: Zap, label: 'Ações', route: null },
-  { icon: FileText, label: 'Receituário Agronômico', route: '/receitas' },
-  { icon: ShoppingBag, label: 'Pedido Simples', route: null },
-  { icon: ClipboardList, label: 'Pedido Completo', route: null },
-  { icon: FolderOpen, label: 'Cadastros', route: null },
-  { icon: Package, label: 'Compras', route: null },
-  { icon: Warehouse, label: 'Controle de Estoque', route: null },
-  { icon: DollarSign, label: 'Financeiro', route: null },
-  { icon: FileOutput, label: 'Emissão Fiscal', route: null },
-  { icon: Wallet, label: 'Caixa', route: null },
-  { icon: BarChart3, label: 'Relatórios', route: null },
-]
-
-const handleItemClick = (route: string | null) => {
-  if (route) {
-    router.push(route)
-    emit('close')
+export default {
+  name: 'SideMenu',
+  components: {
+    HomeIcon: Home,
+    BookIcon: Book,
+    ZapIcon: Zap,
+    FileTextIcon: FileText,
+    ShoppingBagIcon: ShoppingBag,
+    ClipboardListIcon: ClipboardList,
+    FolderOpenIcon: FolderOpen,
+    PackageIcon: Package,
+    WarehouseIcon: Warehouse,
+    DollarSignIcon: DollarSign,
+    FileOutputIcon: FileOutput,
+    WalletIcon: Wallet,
+    BarChart3Icon: BarChart3,
+    LogOutIcon: LogOut
+  },
+  data() {
+    return {
+      menuItems: [
+        { icon: 'HomeIcon', label: 'Início', route: '/', active: false },
+        { icon: 'BookIcon', label: 'Compêndio', route: '/compendio', active: false },
+        { icon: 'ZapIcon', label: 'Ações', route: null },
+        { icon: 'FileTextIcon', label: 'Receituário Agronômico', route: '/receitas' },
+        { icon: 'ShoppingBagIcon', label: 'Pedido Simples', route: null },
+        { icon: 'ClipboardListIcon', label: 'Pedido Completo', route: null },
+        { icon: 'FolderOpenIcon', label: 'Cadastros', route: null },
+        { icon: 'PackageIcon', label: 'Compras', route: null },
+        { icon: 'WarehouseIcon', label: 'Controle de Estoque', route: null },
+        { icon: 'DollarSignIcon', label: 'Financeiro', route: null },
+        { icon: 'FileOutputIcon', label: 'Emissão Fiscal', route: null },
+        { icon: 'WalletIcon', label: 'Caixa', route: null },
+        { icon: 'BarChart3Icon', label: 'Relatórios', route: null }
+      ]
+    }
+  },
+  methods: {
+    handleItemClick(route) {
+      if (route) {
+        this.$router.push(route)
+        this.$emit('close')
+      }
+    }
   }
 }
 </script>

@@ -1,78 +1,81 @@
 <template>
-  <main class="pt-20 pb-8 px-4 bg-gradient-to-br from-gray-50 via-emerald-50/30 to-gray-50 dark:from-gray-900 dark:via-gray-800/30 dark:to-gray-900 min-h-screen transition-colors duration-300">
-    <div class="max-w-md mx-auto">
-      <!-- Grid de Cards Principal -->
-      <div class="space-y-6">
-        <!-- Card Previsão do Tempo - Destaque -->
-        <div class="animate-slide-up" style="animation-delay: 0.1s">
-          <WeatherCard />
-        </div>
+  <main class="dashboard-container">
+    <!-- Card Previsão do Tempo -->
+    <div>
+      <WeatherCard />
+    </div>
 
-        <!-- Grid de Métricas Principais -->
-        <div class="grid grid-cols-2 gap-3">
-          <div class="animate-slide-up" style="animation-delay: 0.2s">
-            <MetricCard
-              :icon="TrendingUp"
-              title="Volume de Vendas"
-              period="Mês"
-              value="R$ 248.750"
-              subtitle="Restam 2 dias"
-              color="green"
-              :compact="true"
-            />
-          </div>
-          <div class="animate-slide-up" style="animation-delay: 0.3s">
-            <MetricCard
-              :icon="FileText"
-              title="Receitas Emitidas"
-              period="Mês"
-              value="127"
-              subtitle="Receitas agronômicas"
-              color="blue"
-              :compact="true"
-            />
-          </div>
-        </div>
-
-        <!-- Cards Secundários -->
-        <div class="space-y-3">
-          <div class="animate-slide-up" style="animation-delay: 0.4s">
-            <MetricCard
-              :icon="Receipt"
-              title="Emissões Fiscais"
-              period="Mês"
-              value="184"
-              subtitle="+12% em relação ao mês anterior"
-              color="orange"
-              :trending="true"
-            />
-          </div>
-
-          <div class="animate-slide-up" style="animation-delay: 0.5s">
-            <MetricCard
-              :icon="Users"
-              title="Clientes Ativos"
-              period="Total"
-              value="342"
-              subtitle="15 novos clientes este mês"
-              color="green"
-              :showGrowth="true"
-            />
-          </div>
-        </div>
-
-        <!-- Card Últimas Atualizações -->
-        <div class="animate-slide-up" style="animation-delay: 0.6s">
-          <UpdatesCard />
-        </div>
+    <!-- Grid de Métricas Principais -->
+    <div class="metrics-grid">
+      <div>
+        <MetricCard
+          icon="TrendingUpIcon"
+          title="Volume de Vendas"
+          period="Mês"
+          value="R$ 248.750"
+          subtitle="Restam 2 dias"
+          color="green"
+          :compact="true"
+        />
       </div>
+      <div>
+        <MetricCard
+          icon="FileTextIcon"
+          title="Receitas Emitidas"
+          period="Mês"
+          value="127"
+          subtitle="Receitas agronômicas"
+          color="blue"
+          :compact="true"
+        />
+      </div>
+    </div>
+
+    <!-- Cards Secundários -->
+    <div class="secondary-cards">
+      <div>
+        <MetricCard
+          icon="ReceiptIcon"
+          title="Emissões Fiscais"
+          period="Mês"
+          value="184"
+          subtitle="+12% em relação ao mês anterior"
+          color="orange"
+          :trending="true"
+        />
+      </div>
+
+      <div>
+        <MetricCard
+          icon="UsersIcon"
+          title="Clientes Ativos"
+          period="Total"
+          value="342"
+          subtitle="15 novos clientes este mês"
+          color="green"
+          :showGrowth="true"
+        />
+      </div>
+    </div>
+
+    <!-- Card Últimas Atualizações -->
+    <div class="animate-slide-up" style="animation-delay: 0.6s">
+      <UpdatesCard />
     </div>
   </main>
 </template>
 
-<script setup lang="ts">
+<script>
 import WeatherCard from '@/components/WeatherCard.vue'
 import MetricCard from '@/components/MetricCard.vue'
 import UpdatesCard from '@/components/UpdatesCard.vue'
-import { TrendingUp, FileText, Receipt, Users } from 'lucide-vue-next'
+
+export default {
+  name: 'Dashboard',
+  components: {
+    WeatherCard,
+    MetricCard,
+    UpdatesCard
+  }
+}
 </script>

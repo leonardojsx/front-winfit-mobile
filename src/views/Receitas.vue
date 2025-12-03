@@ -1,40 +1,37 @@
 <template>
-  <main class="pt-16 pb-6 px-4 bg-gray-50 dark:bg-gray-900 min-h-screen">
-    <div class="max-w-md mx-auto">
+  <main class="receitas-container">
       <!-- Botão Nova Receita -->
-      <div class="pt-4 mb-4">
-        <button 
-          @click="navigateToNewReceita"
-          class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-lg font-medium transition-colors"
-        >
-          + Nova Receita
-        </button>
-      </div>
+      <button 
+        @click="navigateToNewReceita"
+        class="nova-receita-btn"
+      >
+        + Nova Receita
+      </button>
 
       <!-- Filtros -->
-      <div class="space-y-3 mb-4">
-        <div class="grid grid-cols-2 gap-3">
-          <div class="relative">
-            <Calendar class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+      <div class="filtros-container">
+        <div class="filtros-grid">
+          <div class="input-with-icon">
+            <Calendar class="icon" />
             <input
               type="date"
               placeholder="Data inicial"
-              class="w-full pl-10 pr-3 py-2 border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg text-sm focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+              class="form-input form-input-with-icon"
             />
           </div>
-          <div class="relative">
-            <Calendar class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 dark:text-gray-500" />
+          <div class="input-with-icon">
+            <Calendar class="icon" />
             <input
               type="date"
               placeholder="Data final"
-              class="w-full pl-10 pr-3 py-2 border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg text-sm focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+              class="form-input form-input-with-icon"
             />
           </div>
         </div>
 
         <select 
           v-model="selectedStatus"
-          class="w-full h-10 px-3 border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-lg text-sm focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+          class="form-select"
         >
           <option value="">Selecionar...</option>
           <option value="rascunho">Rascunhos</option>
@@ -42,176 +39,165 @@
           <option value="cancelada">Canceladas</option>
         </select>
 
-        <div class="relative">
-          <Search class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 dark:text-gray-500" />
+        <div class="input-with-icon">
+          <Search class="icon" />
           <input
             v-model="searchTerm"
             type="text"
             placeholder="Buscar receita..."
-            class="w-full pl-10 pr-3 py-2 border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+            class="form-input form-input-with-icon"
           />
         </div>
       </div>
 
       <!-- Cards de Status -->
-      <div class="grid grid-cols-3 gap-3 mb-4">
-        <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg p-4 text-center">
-          <div class="text-2xl text-gray-900 dark:text-gray-100 mb-1">{{ statusCounts.rascunhos }}</div>
-          <p class="text-xs text-gray-600 dark:text-gray-400">Rascunhos</p>
+      <div class="status-grid">
+        <div class="status-card rascunhos">
+          <span class="status-card-number">{{ statusCounts.rascunhos }}</span>
+          <p class="status-card-label">Rascunhos</p>
         </div>
-        <div class="bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-700 rounded-lg p-4 text-center">
-          <div class="text-2xl text-gray-900 dark:text-gray-100 mb-1">{{ statusCounts.finalizadas }}</div>
-          <p class="text-xs text-gray-600 dark:text-gray-400">Finalizadas</p>
+        <div class="status-card finalizadas">
+          <span class="status-card-number">{{ statusCounts.finalizadas }}</span>
+          <p class="status-card-label">Finalizadas</p>
         </div>
-        <div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg p-4 text-center">
-          <div class="text-2xl text-gray-900 dark:text-gray-100 mb-1">{{ statusCounts.canceladas }}</div>
-          <p class="text-xs text-gray-600 dark:text-gray-400">Canceladas</p>
+        <div class="status-card canceladas">
+          <span class="status-card-number">{{ statusCounts.canceladas }}</span>
+          <p class="status-card-label">Canceladas</p>
         </div>
       </div>
 
       <!-- Lista de Receitas -->
-      <div class="space-y-3">
+      <div class="receitas-list">
         <div 
           v-for="receita in mockReceitas" 
           :key="receita.id"
-          class="bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-shadow rounded-lg border border-transparent dark:border-gray-700"
+          class="receita-card"
         >
-          <div class="p-4">
-            <!-- Header -->
-            <div class="flex items-start justify-between mb-3">
-              <div>
-                <h3 class="text-gray-900 dark:text-gray-100 mb-1">Receita {{ receita.numero }}</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm">{{ receita.data }}</p>
-              </div>
-              <div 
-                class="w-3 h-3 rounded-full"
-                :class="getStatusColor(receita.status)"
-              />
+          <!-- Header -->
+          <div class="receita-header">
+            <div>
+              <h3 class="receita-titulo">Receita {{ receita.numero }}</h3>
+              <p class="receita-data">{{ receita.data }}</p>
             </div>
+            <div 
+              class="status-indicator"
+              :class="receita.status"
+            />
+          </div>
 
-            <!-- Informações -->
-            <div class="space-y-2 mb-4">
-              <div>
-                <p class="text-xs text-gray-500 dark:text-gray-400">Cliente</p>
-                <p class="text-sm text-gray-900 dark:text-gray-100">{{ receita.cliente }}</p>
-              </div>
-              <div>
-                <p class="text-xs text-gray-500 dark:text-gray-400">Responsável Técnico</p>
-                <p class="text-sm text-gray-900 dark:text-gray-100">{{ receita.responsavelTecnico }}</p>
-              </div>
-              <div>
-                <p class="text-xs text-gray-500 dark:text-gray-400">Envio</p>
-                <p class="text-sm text-gray-900 dark:text-gray-100">{{ receita.envio }}</p>
-              </div>
+          <!-- Informações -->
+          <div class="receita-info">
+            <div class="receita-info-item">
+              <p class="receita-info-label">Cliente</p>
+              <p class="receita-info-value">{{ receita.cliente }}</p>
             </div>
+            <div class="receita-info-item">
+              <p class="receita-info-label">Responsável Técnico</p>
+              <p class="receita-info-value">{{ receita.responsavelTecnico }}</p>
+            </div>
+            <div class="receita-info-item">
+              <p class="receita-info-label">Envio</p>
+              <p class="receita-info-value">{{ receita.envio }}</p>
+            </div>
+          </div>
 
-            <!-- Ações -->
-            <div class="flex gap-2">
-              <button class="flex-1 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-2 rounded-lg text-sm flex items-center justify-center gap-1">
-                <Eye class="w-4 h-4" />
-                Visualizar
-              </button>
-              <button class="flex-1 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-2 rounded-lg text-sm flex items-center justify-center gap-1">
-                <Edit class="w-4 h-4" />
-                Editar
-              </button>
-              <button class="border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-2 rounded-lg text-sm">
-                <Settings class="w-4 h-4" />
-              </button>
-            </div>
+          <!-- Ações -->
+          <div class="receita-actions">
+            <button class="receita-action-btn">
+              <Eye />
+              Visualizar
+            </button>
+            <button class="receita-action-btn">
+              <Edit />
+              Editar
+            </button>
+            <button class="receita-action-btn icon-only">
+              <Settings />
+            </button>
           </div>
         </div>
       </div>
-    </div>
   </main>
 </template>
 
-<script setup lang="ts">
-import { ref, computed } from 'vue'
-import { useRouter } from 'vue-router'
-import { Search, Calendar, Settings, Eye, Edit } from 'lucide-vue-next'
+<script>
+import { Search, Calendar, Settings, Eye, Edit } from 'lucide-vue'
 
-const router = useRouter()
-
-interface Receita {
-  id: string
-  numero: string
-  data: string
-  cliente: string
-  responsavelTecnico: string
-  envio: string
-  status: 'rascunho' | 'finalizada' | 'cancelada'
-}
-
-const searchTerm = ref('')
-const selectedStatus = ref('')
-
-const mockReceitas: Receita[] = [
-  {
-    id: '1',
-    numero: '001/2025',
-    data: '28/11/2025',
-    cliente: 'Fazenda São José',
-    responsavelTecnico: 'Eng. João Silva',
-    envio: '28/11/2025',
-    status: 'finalizada',
+export default {
+  name: 'Receitas',
+  components: {
+    Search,
+    Calendar,
+    Settings,
+    Eye,
+    Edit
   },
-  {
-    id: '2',
-    numero: '002/2025',
-    data: '27/11/2025',
-    cliente: 'Sítio Boa Esperança',
-    responsavelTecnico: 'Eng. Maria Santos',
-    envio: 'Não enviado',
-    status: 'rascunho',
+  data() {
+    return {
+      searchTerm: '',
+      selectedStatus: '',
+      mockReceitas: [
+        {
+          id: '1',
+          numero: '001/2025',
+          data: '28/11/2025',
+          cliente: 'Fazenda São José',
+          responsavelTecnico: 'Eng. João Silva',
+          envio: '28/11/2025',
+          status: 'finalizada',
+        },
+        {
+          id: '2',
+          numero: '002/2025',
+          data: '27/11/2025',
+          cliente: 'Sítio Boa Esperança',
+          responsavelTecnico: 'Eng. Maria Santos',
+          envio: 'Não enviado',
+          status: 'rascunho',
+        },
+        {
+          id: '3',
+          numero: '003/2025',
+          data: '26/11/2025',
+          cliente: 'Fazenda Santa Clara',
+          responsavelTecnico: 'Eng. João Silva',
+          envio: '26/11/2025',
+          status: 'finalizada',
+        },
+        {
+          id: '4',
+          numero: '004/2025',
+          data: '25/11/2025',
+          cliente: 'Chácara Verde',
+          responsavelTecnico: 'Eng. Carlos Oliveira',
+          envio: 'Não enviado',
+          status: 'rascunho',
+        },
+        {
+          id: '5',
+          numero: '005/2025',
+          data: '24/11/2025',
+          cliente: 'Fazenda Progresso',
+          responsavelTecnico: 'Eng. Maria Santos',
+          envio: '24/11/2025',
+          status: 'cancelada',
+        },
+      ]
+    }
   },
-  {
-    id: '3',
-    numero: '003/2025',
-    data: '26/11/2025',
-    cliente: 'Fazenda Santa Clara',
-    responsavelTecnico: 'Eng. João Silva',
-    envio: '26/11/2025',
-    status: 'finalizada',
+  computed: {
+    statusCounts() {
+      return {
+        rascunhos: this.mockReceitas.filter(r => r.status === 'rascunho').length,
+        finalizadas: this.mockReceitas.filter(r => r.status === 'finalizada').length,
+        canceladas: this.mockReceitas.filter(r => r.status === 'cancelada').length,
+      }
+    }
   },
-  {
-    id: '4',
-    numero: '004/2025',
-    data: '25/11/2025',
-    cliente: 'Chácara Verde',
-    responsavelTecnico: 'Eng. Carlos Oliveira',
-    envio: 'Não enviado',
-    status: 'rascunho',
-  },
-  {
-    id: '5',
-    numero: '005/2025',
-    data: '24/11/2025',
-    cliente: 'Fazenda Progresso',
-    responsavelTecnico: 'Eng. Maria Santos',
-    envio: '24/11/2025',
-    status: 'cancelada',
-  },
-]
-
-const statusCounts = computed(() => ({
-  rascunhos: mockReceitas.filter(r => r.status === 'rascunho').length,
-  finalizadas: mockReceitas.filter(r => r.status === 'finalizada').length,
-  canceladas: mockReceitas.filter(r => r.status === 'cancelada').length,
-}))
-
-const getStatusColor = (status: Receita['status']) => {
-  switch (status) {
-    case 'rascunho':
-      return 'bg-yellow-500'
-    case 'finalizada':
-      return 'bg-emerald-500'
-    case 'cancelada':
-      return 'bg-red-500'
+  methods: {
+    navigateToNewReceita() {
+      this.$router.push('/receitas/nova')
+    }
   }
-}
-
-const navigateToNewReceita = () => {
-  router.push('/receitas/nova')
 }
 </script>

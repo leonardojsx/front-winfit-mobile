@@ -1,22 +1,32 @@
 <template>
   <button
     @click="toggleTheme"
-    @blur="$event.target.blur()"
-    class="p-2 rounded-lg transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none"
-    :class="[
-      isDark 
-        ? 'bg-gray-800 text-yellow-400' 
-        : 'bg-white text-gray-600 shadow-sm border border-gray-200'
-    ]"
+    class="theme-toggle"
+    :style="{
+      background: isDark ? '#374151' : 'white',
+      color: isDark ? '#fbbf24' : '#6b7280'
+    }"
   >
-    <Sun v-if="isDark" class="w-5 h-5" />
-    <Moon v-else class="w-5 h-5" />
+    <SunIcon v-if="isDark" style="width: 20px; height: 20px;" />
+    <MoonIcon v-else style="width: 20px; height: 20px;" />
   </button>
 </template>
 
-<script setup lang="ts">
-import { Sun, Moon } from 'lucide-vue-next'
-import { useTheme } from '@/composables/useTheme'
+<script>
+import { Sun, Moon } from 'lucide-vue'
+import { mapGetters, mapActions } from 'vuex'
 
-const { isDark, toggleTheme } = useTheme()
+export default {
+  name: 'ThemeToggle',
+  components: {
+    SunIcon: Sun,
+    MoonIcon: Moon
+  },
+  computed: {
+    ...mapGetters(['isDark'])
+  },
+  methods: {
+    ...mapActions(['toggleTheme'])
+  }
+}
 </script>
